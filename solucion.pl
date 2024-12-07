@@ -89,7 +89,8 @@ cuantasCasasPuedoComprar(_,[],_).
 
 puedeComprarSublista(Dinero,Sublista):-
     foreach(member(Elem, Sublista), (puedoComprarCasa(Dinero,Elem))).
-                                    
+
+puedeComprarSublista(_,[]).                                  
     
     
 
