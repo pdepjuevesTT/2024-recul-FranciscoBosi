@@ -87,16 +87,21 @@ cuantasCasaPuedoComprar(Dinero,ListaDuenio,Lista):-
             
     
     
-    puedoComprarSublista(Dinero,Sublista):-
-        forall((member(Duenio, Sublista)), puedoComprarCasa(Dinero,Duenio)).
+    puedoComprarSublista(Dinero,[Cabeza|Cola]):-
+        puedoComprarCasa(Dinero,Cabeza),
+        valorDeSuPropiedad(Cabeza,Valor),
+        cambiarDinero(Dinero,Valor),
+        puedoComprarSublista(Dinero,Cola).
+    puedoComprarSublista(_,[]).
+
         
     puedoComprarCasa(Dinero,Duenio):-
+        persona(Duenio),
         valorDeSuPropiedad(Duenio,Valor),
-        Dinero > Valor,
-        cambiarDinero(Dinero,Valor). 
+        Dinero > Valor.
                 cambiarDinero(Dinero,Valor):-
-                    Dinero is Dinero - Valor,
-                    Dinero > 0.
+                    Dinero is Dinero - Valor.
             
             
+
 
