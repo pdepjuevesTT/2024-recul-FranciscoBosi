@@ -1,4 +1,3 @@
-% Solución en Prolog
 % Aquí va el código.
 %1%
 
@@ -81,24 +80,22 @@ valorDeSuPropiedad(julian,140000).
 valorDeSuPropiedad(vale,95000).
 valorDeSuPropiedad(fer,60000).
 
-cuantasCasasPuedoComprar(Dinero,[Casa|Resto],Lista):-
-    puedoComprar(Dinero,Casa),
-    cuantasCasasPuedoComprar(Dinero,Resto,[Casa|Lista]).
-
-    
-    
+cuantasCasasPuedoComprar(Dinero,ListaDeS,Lista):-
+    sublista(ListaDeS,Sublista),
+    findall(Sublista, puedeComprarSublista(Dinero,Sublista), Lista).
     
 
 cuantasCasasPuedoComprar(_,[],_).
 
-hacerOperaciones(Dinero,Casa):-
-    puedoComprar(Dinero,Casa),
-    obtenerValorCasa(Casa,Valor),
-    cambiarDinero(Dinero,Valor).
+puedeComprarSublista(Dinero,Sublista):-
+    foreach(member(Elem, Sublista), (puedoComprarCasa(Dinero,Elem))).
+                                    
+    
+    
 
-    puedoComprar(Dinero,Casa):-
+    puedoComprarCasa(Dinero,Casa):-
         viveEn(Persona,_,Casa),
-        valorDeSuPropiedad(Persona,Valor),
+        obtenerValorCasa(Persona,Valor),
         Dinero > Valor.
             obtenerValorCasa(Casa,Valor):-
                 viveEn(Persona,_,Casa),
@@ -109,4 +106,5 @@ hacerOperaciones(Dinero,Casa):-
                     Dinero > 0.
             
             
+
 
