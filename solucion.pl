@@ -80,32 +80,23 @@ valorDeSuPropiedad(julian,140000).
 valorDeSuPropiedad(vale,95000).
 valorDeSuPropiedad(fer,60000).
 
-cuantasCasasPuedoComprar(Dinero,ListaDeS,Lista):-
-    sublista(ListaDeS,Sublista),
-    findall(Sublista, puedeComprarSublista(Dinero,Sublista), Lista).
-    
-
-cuantasCasasPuedoComprar(_,[],_).
-
-puedeComprarSublista(Dinero,Sublista):-
-    foreach(member(Elem, Sublista), (puedoComprarCasa(Dinero,Elem))).
-
-puedeComprarSublista(_,[]).                                  
+cuantasCasaPuedoComprar(Dinero,ListaDuenio,Lista):-
+    sublista(ListaDuenio,Sublista),
+    findall(Sublista, puedoComprarSublista(Dinero,Sublista), Lista).
+     %no entiendo porque solo da lista vacia
+            
     
     
-
-    puedoComprarCasa(Dinero,Casa):-
-        viveEn(Persona,_,Casa),
-        obtenerValorCasa(Persona,Valor),
-        Dinero > Valor.
-            obtenerValorCasa(Casa,Valor):-
-                viveEn(Persona,_,Casa),
-                valorDeSuPropiedad(Persona,Valor).
+    puedoComprarSublista(Dinero,Sublista):-
+        forall((member(Duenio, Sublista)), puedoComprarCasa(Dinero,Duenio)).
         
+    puedoComprarCasa(Dinero,Duenio):-
+        valorDeSuPropiedad(Duenio,Valor),
+        Dinero > Valor,
+        cambiarDinero(Dinero,Valor). 
                 cambiarDinero(Dinero,Valor):-
                     Dinero is Dinero - Valor,
                     Dinero > 0.
             
             
-
 
